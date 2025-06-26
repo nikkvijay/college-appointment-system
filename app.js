@@ -3,6 +3,7 @@ const cors = require("cors");
 require("dotenv").config();
 
 const authRoutes = require("./routes/authRoutes");
+const availabilityRoutes = require('./routes/availabilityRoutes');
 const app = express();
 
 // Middleware
@@ -11,6 +12,7 @@ app.use(express.json());
 
 // Single mount point for auth routes
 app.use("/api/auth", authRoutes);
+app.use('/api/availability', availabilityRoutes);
 
 // Health check endpoint
 app.get("/health", (req, res) => {
