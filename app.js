@@ -2,17 +2,15 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 
-// Create Express app
+const authRoutes = require("./routes/authRoutes");
 const app = express();
 
 // Middleware
 app.use(cors());
+app.use(express.json());
 
-// Request logging middleware
-app.use((req, res, next) => {
-  console.log(`${new Date().toISOString()} - ${req.method} ${req.originalUrl}`);
-  next();
-});
+// Single mount point for auth routes
+app.use("/api/auth", authRoutes);
 
 // Health check endpoint
 app.get("/health", (req, res) => {
@@ -29,22 +27,7 @@ app.get("/", (req, res) => {
     success: true,
     message: "Welcome to College Appointment System API",
     version: "1.0.0",
-    endpoints: {
-      health: "/health",
-    },
   });
 });
-
-// 404 handler
-app.use("*", (req, res) => {
-  res.status(404).json({
-    success: false,
-    message: "Endpoint not found",
-    requestedUrl: req.originalUrl,
-  });
-});
-
-// Global error handler
-
 
 module.exports = app;
