@@ -167,6 +167,18 @@ const getAvailableSlots = async (req, res) => {
   }
 };
 
+const getAvailabilityDateTime = (availability, timeField = "startTime") => {
+  try {
+    const [hours, minutes] = availability[timeField].split(":");
+    const dateTime = new Date(availability.date);
+    dateTime.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+    return dateTime;
+  } catch (error) {
+    console.error("Error computing availability datetime:", error.message);
+    return null;
+  }
+};
+
 // Delete availability slot
 const deleteAvailability = async (req, res) => {
   try {

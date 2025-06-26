@@ -40,26 +40,6 @@ const availabilitySchema = new mongoose.Schema(
   }
 );
 
-// Index for efficient queries
-availabilitySchema.index({ professor: 1, date: 1, startTime: 1 });
-availabilitySchema.index({ professor: 1, isBooked: 1 });
 
-// Virtual for combining date and time
-availabilitySchema.virtual("startDateTime").get(function () {
-  const [hours, minutes] = this.startTime.split(":");
-  const dateTime = new Date(this.date);
-  dateTime.setHours(parseInt(hours), parseInt(minutes), 0, 0);
-  return dateTime;
-});
-
-availabilitySchema.virtual("endDateTime").get(function () {
-  const [hours, minutes] = this.endTime.split(":");
-  const dateTime = new Date(this.date);
-  dateTime.setHours(parseInt(hours), parseInt(minutes), 0, 0);
-  return dateTime;
-});
-
-// Ensure virtuals are included when converting to JSON
-availabilitySchema.set("toJSON", { virtuals: true });
 
 module.exports = mongoose.model("Availability", availabilitySchema);

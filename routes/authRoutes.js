@@ -1,17 +1,15 @@
 const express = require("express");
 const router = express.Router();
+const {
+  register,
+  login,
+  getProfile,
+} = require("../controllers/authController");
+const { authenticate } = require("../middleware/authMiddleware");
 
-// Basic route handlers (temporary)
-router.post("/register", (req, res) => {
-  res.json({ message: "Register endpoint" });
-});
-
-router.post("/login", (req, res) => {
-  res.json({ message: "Login endpoint" });
-});
-
-router.get("/profile", (req, res) => {
-  res.json({ message: "Profile endpoint" });
-});
+// Auth routes
+router.post("/register", register);
+router.post("/login", login);
+router.get("/profile", authenticate, getProfile);
 
 module.exports = router;
