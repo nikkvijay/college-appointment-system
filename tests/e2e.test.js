@@ -6,7 +6,7 @@ const Availability = require("../models/Availability");
 const Appointment = require("../models/Appointment");
 
 // Test database connection
-const MONGODB_TEST_URI = "mongodb://localhost:27017/college_appointment_test";
+const MONGODB_TEST_URI = process.env.MONGODB_URI_TEST;
 
 describe("College Appointment System E2E Test", () => {
   let server;
